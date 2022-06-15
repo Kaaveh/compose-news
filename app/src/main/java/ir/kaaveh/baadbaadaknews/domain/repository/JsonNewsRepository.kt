@@ -6,4 +6,10 @@ interface JsonNewsRepository {
 
     suspend fun getJsonNews(): List<Article>
 
+    suspend fun insertFavoriteNews(newsTitle: String)
+
+    suspend fun removeFavoriteNews(newsTitle: String)
+
+    suspend fun isFavoriteNews(newsTitle: String): Boolean
+
 }

@@ -13,4 +13,16 @@ class JsonNewsRepositoryImpl @Inject constructor(
     override suspend fun getJsonNews(): List<Article> =
         api.getBreakingNews().articleDtos.map { it.toArticle() }
 
+    override suspend fun insertFavoriteNews(newsTitle: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removeFavoriteNews(newsTitle: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun isFavoriteNews(newsTitle: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
 }
