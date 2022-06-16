@@ -13,6 +13,6 @@ interface JsonNewsRepository {
 
     suspend fun isFavoriteNews(news: Article): Boolean
 
-    suspend fun getAllFavoriteNews(): Flow<List<Article>>
+    fun getAllFavoriteNews(): Flow<List<Article>>
 
 }

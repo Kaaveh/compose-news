@@ -30,7 +30,7 @@ class JsonNewsRepositoryImpl @Inject constructor(
             source = news.source
         )
 
-    override suspend fun getAllFavoriteNews(): Flow<List<Article>> =
+    override fun getAllFavoriteNews(): Flow<List<Article>> =
         dao.getAllFavoriteNews().map { list -> list.map { it.toArticle() } }
 
 }
