@@ -16,7 +16,8 @@ class GetJsonNewsUseCase @Inject constructor(
     operator fun invoke(): Flow<Resource<List<Article>>> = flow {
         try {
             emit(Resource.Loading())
-            val articles = repository.getJsonNews()
+            val articles =
+                repository.getJsonNews().map { it.copy(isFavorite = repository.isFavoriteNews(it)) }
             emit(Resource.Success(articles))
         } catch (e: HttpException) {
             emit(Resource.Error(e))
