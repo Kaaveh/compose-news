@@ -93,4 +93,7 @@ dependencies {
     //Coil
     implementation "io.coil-kt:coil-compose:2.1.0"
 
+    //Webview
+    implementation "com.google.accompanist:accompanist-webview:0.24.11-rc"
+
 }
