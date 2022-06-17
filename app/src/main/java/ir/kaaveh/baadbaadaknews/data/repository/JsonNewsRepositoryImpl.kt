@@ -16,7 +16,7 @@ class JsonNewsRepositoryImpl @Inject constructor(
 ) : JsonNewsRepository {
 
     override suspend fun getJsonNews(): List<Article> =
-        api.getBreakingNews().articleDtos.map { it.toArticle() }
+        api.getBreakingNews().articles.map { it.toArticle() }
 
     override suspend fun insertFavoriteNews(news: Article) =
         dao.insertFavoriteNews(news = news.toFavoriteNewsDto())

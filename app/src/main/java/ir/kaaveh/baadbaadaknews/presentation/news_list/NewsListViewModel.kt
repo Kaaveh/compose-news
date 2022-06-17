@@ -4,12 +4,17 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.kaaveh.baadbaadaknews.common.Resource
+import ir.kaaveh.baadbaadaknews.domain.model.Article
 import ir.kaaveh.baadbaadaknews.domain.usecase.GetJsonNewsUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class NewsListViewModel @Inject constructor(
     private val getJsonNewsUseCase: GetJsonNewsUseCase
 ) : ViewModel() {
@@ -22,7 +27,7 @@ class NewsListViewModel @Inject constructor(
     }
 
     private fun getNewsList() = getJsonNewsUseCase().onEach { result ->
-        when(result){
+        when (result) {
             is Resource.Loading -> {
                 _state.value = NewsListState(isLoading = true)
             }
@@ -36,5 +41,9 @@ class NewsListViewModel @Inject constructor(
             }
         }
     }.launchIn(viewModelScope)
+
+    fun onFavoriteClick(article: Article) {
+        // TODO: insert in db
+    }
 
 }
