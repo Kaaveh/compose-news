@@ -10,17 +10,19 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentComposer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import ir.kaaveh.baadbaadaknews.presentation.destinations.NewsDetailScreenDestination
 import ir.kaaveh.baadbaadaknews.presentation.news_list.component.NewsListItem
 
-@Destination(start = true)
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun NewsListScreen(
     navigator: DestinationsNavigator,
@@ -37,7 +39,9 @@ fun NewsListScreen(
                 NewsListItem(
                     news = article,
                     onItemClick = {
-                        // TODO: Navigate
+                        navigator.navigate(
+                            NewsDetailScreenDestination(article = article)
+                        )
                     },
                     onFavoriteClick = { viewModel.onFavoriteClick(article) }
                 )
