@@ -11,14 +11,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import ir.kaaveh.baadbaadaknews.presentation.destinations.NewsDetailScreenDestination
-import ir.kaaveh.baadbaadaknews.presentation.news_list.NewsListViewModel
 import ir.kaaveh.baadbaadaknews.presentation.news_list.component.NewsListItem
 
 @Destination
 @Composable
 fun FavoriteNewsScreen(
     navigator: DestinationsNavigator,
-    viewModel: NewsListViewModel = hiltViewModel()
+    viewModel: FavoriteNewsViewModel = hiltViewModel()
 ) {
 
     val state = viewModel.state.value
