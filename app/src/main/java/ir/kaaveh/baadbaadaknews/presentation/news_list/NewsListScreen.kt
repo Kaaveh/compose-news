@@ -10,10 +10,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -22,7 +18,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import ir.kaaveh.baadbaadaknews.domain.model.Article
 import ir.kaaveh.baadbaadaknews.presentation.destinations.NewsDetailScreenDestination
 import ir.kaaveh.baadbaadaknews.presentation.news_list.component.NewsListItem
 
@@ -35,14 +30,12 @@ fun NewsListScreen(
 ) {
 
     val state = viewModel.state.value
-    var news by rememberSaveable { mutableStateOf(listOf<Article>()) }
 
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        news = viewModel.state.value.news
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(news) { article ->
+            items(state.news) { article ->
                 NewsListItem(
                     news = article,
                     onItemClick = {
@@ -52,9 +45,6 @@ fun NewsListScreen(
                     },
                     onFavoriteClick = {
                         viewModel.onFavoriteClick(article)
-                        val newsList = news.toMutableList()
-                        news = listOf()
-                        news = newsList.toList()
                     }
                 )
             }

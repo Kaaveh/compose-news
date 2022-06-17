@@ -55,6 +55,7 @@ class NewsListViewModel @Inject constructor(
         }
         val newsList = _state.value.news.toMutableList()
         newsList.find { it.title == article.title }?.isFavorite = !article.isFavorite
+        _state.value = state.value.copy(news = listOf())
         _state.value = state.value.copy(news = newsList)
     }
 
