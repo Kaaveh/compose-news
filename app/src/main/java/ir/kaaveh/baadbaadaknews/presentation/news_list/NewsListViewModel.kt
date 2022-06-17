@@ -53,7 +53,9 @@ class NewsListViewModel @Inject constructor(
             else
                 removeFavoriteNewsUseCase(article)
         }
-        getNewsList()
+        val newsList = _state.value.news.toMutableList()
+        newsList.find { it.title == article.title }?.isFavorite = !article.isFavorite
+        _state.value = state.value.copy(news = newsList)
     }
 
 }
