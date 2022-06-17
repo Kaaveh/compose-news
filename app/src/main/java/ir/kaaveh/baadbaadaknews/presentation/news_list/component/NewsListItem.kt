@@ -1,6 +1,7 @@
 package ir.kaaveh.baadbaadaknews.presentation.news_list.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.TabRowDefaults.Divider
@@ -13,23 +14,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import ir.kaaveh.baadbaadaknews.domain.model.Article
 
-@Preview(showBackground = true)
 @Composable
 fun NewsListItem(
-    news: Article? = null,
-    onItemClick: (Article) -> Unit = {},
-    onFavoriteClick: (Article) -> Unit = {},
+    news: Article,
+    onItemClick: (Article) -> Unit,
+    onFavoriteClick: (Article) -> Unit,
 ) {
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, top = 8.dp, end = 8.dp),
+            .padding(start = 8.dp, top = 8.dp, end = 8.dp)
+            .clickable { onItemClick(news) },
         horizontalAlignment = Alignment.End,
     ) {
         Row(
@@ -37,7 +37,7 @@ fun NewsListItem(
                 .fillMaxWidth(),
         ) {
             Image(
-                painter = rememberAsyncImagePainter(model = news?.urlToImage),
+                painter = rememberAsyncImagePainter(model = news.urlToImage),
                 contentDescription = null,
                 modifier = Modifier
                     .width(160.dp)
@@ -50,14 +50,14 @@ fun NewsListItem(
                     .padding(start = 8.dp),
             ) {
                 Text(
-                    text = news?.title ?: "TITLE",
+                    text = news.title,
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = news?.description ?: "DESCRIPTIONS",
+                    text = news.description,
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
@@ -68,14 +68,14 @@ fun NewsListItem(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = news?.source ?: "SOURCE",
+            text = news.source,
             modifier = Modifier.fillMaxWidth(),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = news?.publishedAt ?: "PUBLISHED_AT",
+            text = news.publishedAt,
             modifier = Modifier.fillMaxWidth(),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -84,14 +84,15 @@ fun NewsListItem(
         Icon(
             imageVector = Icons.Filled.Favorite,
             contentDescription = "",
-            tint = when (news?.isFavorite ?: false) {
+            tint = when (news.isFavorite) {
                 true -> {
                     Color.Red
                 }
                 false -> {
                     Color.LightGray
                 }
-            }
+            },
+            modifier = Modifier.clickable { onFavoriteClick(news) }
         )
         Spacer(modifier = Modifier.height(8.dp))
         Divider(color = Color.Black)
