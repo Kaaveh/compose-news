@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.kaaveh.baadbaadaknews.common.Resource
 import ir.kaaveh.baadbaadaknews.domain.model.Article
+import ir.kaaveh.baadbaadaknews.domain.usecase.AddFavoriteNewsUseCase
 import ir.kaaveh.baadbaadaknews.domain.usecase.GetJsonNewsUseCase
+import ir.kaaveh.baadbaadaknews.domain.usecase.RemoveFavoriteNewsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsListViewModel @Inject constructor(
-    private val getJsonNewsUseCase: GetJsonNewsUseCase
+    private val getJsonNewsUseCase: GetJsonNewsUseCase,
+    private val addFavoriteNewsUseCase: AddFavoriteNewsUseCase,
+    private val removeFavoriteNewsUseCase: RemoveFavoriteNewsUseCase,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(NewsListState())
@@ -43,7 +47,13 @@ class NewsListViewModel @Inject constructor(
     }.launchIn(viewModelScope)
 
     fun onFavoriteClick(article: Article) {
-        // TODO: insert in db
+        viewModelScope.launch(Dispatchers.IO) {
+            if (!article.isFavorite)
+                addFavoriteNewsUseCase(article)
+            else
+                removeFavoriteNewsUseCase(article)
+        }
+        getNewsList()
     }
 
 }
