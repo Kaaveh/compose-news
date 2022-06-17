@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.kaaveh.baadbaadaknews.common.Resource
 import ir.kaaveh.baadbaadaknews.domain.model.Article
 import ir.kaaveh.baadbaadaknews.domain.usecase.AddFavoriteNewsUseCase
+import ir.kaaveh.baadbaadaknews.domain.usecase.GetFavoriteNewsUseCase
 import ir.kaaveh.baadbaadaknews.domain.usecase.GetJsonNewsUseCase
 import ir.kaaveh.baadbaadaknews.domain.usecase.RemoveFavoriteNewsUseCase
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,7 @@ class NewsListViewModel @Inject constructor(
     private val getJsonNewsUseCase: GetJsonNewsUseCase,
     private val addFavoriteNewsUseCase: AddFavoriteNewsUseCase,
     private val removeFavoriteNewsUseCase: RemoveFavoriteNewsUseCase,
+    private val getFavoriteNewsUseCase: GetFavoriteNewsUseCase,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(NewsListState())
@@ -28,6 +30,7 @@ class NewsListViewModel @Inject constructor(
 
     init {
         getNewsList()
+        getFavoriteNews()
     }
 
     private fun getNewsList() = getJsonNewsUseCase().onEach { result ->
@@ -46,6 +49,14 @@ class NewsListViewModel @Inject constructor(
         }
     }.launchIn(viewModelScope)
 
+    private fun getFavoriteNews() = getFavoriteNewsUseCase().onEach { favoriteList ->
+        val updatedList = _state.value.news.map { article ->
+            val temp = favoriteList.find { it.title == article.title }
+            temp?.copy(isFavorite = true) ?: article.copy(isFavorite = false)
+        }
+        _state.value = _state.value.copy(news = updatedList)
+    }.launchIn(viewModelScope)
+
     fun onFavoriteClick(article: Article) {
         viewModelScope.launch(Dispatchers.IO) {
             if (!article.isFavorite)
@@ -53,10 +64,6 @@ class NewsListViewModel @Inject constructor(
             else
                 removeFavoriteNewsUseCase(article)
         }
-        val newsList = _state.value.news.toMutableList()
-        newsList.find { it.title == article.title }?.isFavorite = !article.isFavorite
-        _state.value = state.value.copy(news = listOf())
-        _state.value = state.value.copy(news = newsList)
     }
 
 }
