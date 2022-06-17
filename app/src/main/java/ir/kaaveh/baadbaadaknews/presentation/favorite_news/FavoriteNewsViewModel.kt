@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.kaaveh.baadbaadaknews.domain.model.Article
 import ir.kaaveh.baadbaadaknews.domain.usecase.AddFavoriteNewsUseCase
 import ir.kaaveh.baadbaadaknews.domain.usecase.GetFavoriteNewsUseCase
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class FavoriteNewsViewModel @Inject constructor(
     private val addFavoriteNewsUseCase: AddFavoriteNewsUseCase,
     private val removeFavoriteNewsUseCase: RemoveFavoriteNewsUseCase,
