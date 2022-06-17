@@ -16,6 +16,6 @@ interface FavoriteNewsDao {
     suspend fun deleteFavoriteNews(news: FavoriteNewsDto)
 
     @Query("SELECT EXISTS(SELECT * FROM favorites WHERE title = :title AND source = :source)")
-    fun isFavoriteNews(title: String, source: String): Boolean
+    suspend fun isFavoriteNews(title: String, source: String): Boolean
 
 }

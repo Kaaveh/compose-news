@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ir.kaaveh.baadbaadaknews">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".NewsApplication"
         android:allowBackup="true"

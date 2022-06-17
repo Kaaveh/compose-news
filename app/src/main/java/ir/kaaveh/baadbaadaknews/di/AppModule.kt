@@ -10,6 +10,8 @@ import ir.kaaveh.baadbaadaknews.common.Constants.Companion.BASE_URL
 import ir.kaaveh.baadbaadaknews.data.FavoriteNewsDatabase
 import ir.kaaveh.baadbaadaknews.data.local.FavoriteNewsDao
 import ir.kaaveh.baadbaadaknews.data.remote.NewsAPI
+import ir.kaaveh.baadbaadaknews.data.repository.JsonNewsRepositoryImpl
+import ir.kaaveh.baadbaadaknews.domain.repository.JsonNewsRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -41,5 +43,12 @@ object AppModule {
     @Singleton
     fun provideFavoriteNewsDao(db: FavoriteNewsDatabase): FavoriteNewsDao =
         db.newsDao
+
+    @Provides
+    @Singleton
+    fun provideJsonNewsRepository(
+        api: NewsAPI,
+        dao: FavoriteNewsDao,
+    ): JsonNewsRepository = JsonNewsRepositoryImpl(api = api, dao = dao)
 
 }
