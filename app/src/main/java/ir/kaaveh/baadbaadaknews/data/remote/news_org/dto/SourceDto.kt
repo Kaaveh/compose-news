@@ -1,4 +1,4 @@
-package ir.kaaveh.baadbaadaknews.data.remote.dto
+package ir.kaaveh.baadbaadaknews.data.remote.news_org.dto
 
 data class SourceDto(
     val id: Any,

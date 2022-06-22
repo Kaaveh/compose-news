@@ -1,7 +1,7 @@
-package ir.kaaveh.baadbaadaknews.data.remote
+package ir.kaaveh.baadbaadaknews.data.remote.news_org
 
 import ir.kaaveh.baadbaadaknews.common.Constants.Companion.API_KEY
-import ir.kaaveh.baadbaadaknews.data.remote.dto.NewsResponse
+import ir.kaaveh.baadbaadaknews.data.remote.news_org.dto.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

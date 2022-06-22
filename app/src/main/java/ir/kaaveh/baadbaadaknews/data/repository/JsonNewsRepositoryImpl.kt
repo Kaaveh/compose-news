@@ -3,7 +3,7 @@ package ir.kaaveh.baadbaadaknews.data.repository
 import ir.kaaveh.baadbaadaknews.data.local.FavoriteNewsDao
 import ir.kaaveh.baadbaadaknews.data.mapper.toArticle
 import ir.kaaveh.baadbaadaknews.data.mapper.toFavoriteNewsDto
-import ir.kaaveh.baadbaadaknews.data.remote.NewsAPI
+import ir.kaaveh.baadbaadaknews.data.remote.news_org.NewsAPI
 import ir.kaaveh.baadbaadaknews.domain.model.Article
 import ir.kaaveh.baadbaadaknews.domain.repository.JsonNewsRepository
 import kotlinx.coroutines.flow.Flow

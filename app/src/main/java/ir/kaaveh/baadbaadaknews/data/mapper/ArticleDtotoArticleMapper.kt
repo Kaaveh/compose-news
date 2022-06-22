@@ -1,6 +1,6 @@
 package ir.kaaveh.baadbaadaknews.data.mapper
 
-import ir.kaaveh.baadbaadaknews.data.remote.dto.ArticleDto
+import ir.kaaveh.baadbaadaknews.data.remote.news_org.dto.ArticleDto
 import ir.kaaveh.baadbaadaknews.domain.model.Article
 
 fun ArticleDto.toArticle(): Article = Article(

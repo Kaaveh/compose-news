@@ -6,14 +6,17 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.kaaveh.baadbaadaknews.common.Constants.Companion.BASE_URL
+import ir.kaaveh.baadbaadaknews.common.Constants.Companion.KABARONLINE_BASE_URL
+import ir.kaaveh.baadbaadaknews.common.Constants.Companion.NEWS_ORG_BASE_URL
 import ir.kaaveh.baadbaadaknews.data.FavoriteNewsDatabase
 import ir.kaaveh.baadbaadaknews.data.local.FavoriteNewsDao
-import ir.kaaveh.baadbaadaknews.data.remote.NewsAPI
+import ir.kaaveh.baadbaadaknews.data.remote.khabaronline.KhabaronlineAPI
+import ir.kaaveh.baadbaadaknews.data.remote.news_org.NewsAPI
 import ir.kaaveh.baadbaadaknews.data.repository.JsonNewsRepositoryImpl
 import ir.kaaveh.baadbaadaknews.domain.repository.JsonNewsRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -23,10 +26,18 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNewsApi(): NewsAPI = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(NEWS_ORG_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(NewsAPI::class.java)
+
+    @Provides
+    @Singleton
+    fun provideKabaronlineApi(): KhabaronlineAPI = Retrofit.Builder()
+        .baseUrl(KABARONLINE_BASE_URL)
+        .addConverterFactory(SimpleXmlConverterFactory.create())
+        .build()
+        .create(KhabaronlineAPI::class.java)
 
     @Provides
     @Singleton
