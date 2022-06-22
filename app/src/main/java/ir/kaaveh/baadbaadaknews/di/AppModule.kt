@@ -12,8 +12,8 @@ import ir.kaaveh.baadbaadaknews.data.FavoriteNewsDatabase
 import ir.kaaveh.baadbaadaknews.data.local.FavoriteNewsDao
 import ir.kaaveh.baadbaadaknews.data.remote.khabaronline.KhabaronlineAPI
 import ir.kaaveh.baadbaadaknews.data.remote.news_org.NewsAPI
-import ir.kaaveh.baadbaadaknews.data.repository.JsonNewsRepositoryImpl
-import ir.kaaveh.baadbaadaknews.domain.repository.JsonNewsRepository
+import ir.kaaveh.baadbaadaknews.data.repository.NewsRepositoryImpl
+import ir.kaaveh.baadbaadaknews.domain.repository.NewsRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
@@ -58,8 +58,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideJsonNewsRepository(
-        api: NewsAPI,
+        orgAPI: NewsAPI,
+        khabaronlineAPI: KhabaronlineAPI,
         dao: FavoriteNewsDao,
-    ): JsonNewsRepository = JsonNewsRepositoryImpl(api = api, dao = dao)
+    ): NewsRepository =
+        NewsRepositoryImpl(orgAPI = orgAPI, khabaronlineAPI = khabaronlineAPI, dao = dao)
 
 }
